@@ -1,0 +1,62 @@
+---
+
+found_packagers: []
+
+packager:
+  apt-get:
+    check: 'apt-get --version'
+    install: 'apt-get update && apt-get -y install python3-apt'
+    verify:
+      keyword: ' 0 newly installed'
+      present: false
+  yum:
+    check: 'yum --version'
+    install: 'yum -y install python3'
+    verify:
+      keyword: 'Nothing'
+      present: false
+  dnf:
+    check: 'dnf --version'
+    install: 'dnf -y install python3'
+    verify:
+      keyword: 'Nothing'
+      present: false
+  apk:
+    check: 'apk --version'
+    install: 'apk update && apk add python3'
+    verify:
+      keyword: 'Installing'
+      present: true
+  emerge:
+    check: 'emerge --version'
+    install:
+    verify:
+      keyword: 'changed'
+      present: true
+  pacman:
+    check: 'pacman --version'
+    install: 'pacman -Sy ; pacman -T python || pacman -S --noconfirm python'
+    verify:
+      keyword: ' installing python'
+      present: true
+  pkg:
+    check: 'pkg --version'
+    install: >-
+      ASSUME_ALWAYS_YES=YES
+      pkg install python ;
+      ln -s /usr/local/bin/python /usr/bin/python || exit 0
+    verify:
+      keyword: 'Extracting python'
+      present: true
+  pkg_add:
+    check: 'pkg_info'
+    install: 'pkg_add -Iz python-3*'
+    verify:
+      keyword: ': ok'
+      present: true
+  zypper:
+    check: 'zypper --version'
+    install: 'python3'
+    verify:
+      keyword: 'Nothing'
+      present: false

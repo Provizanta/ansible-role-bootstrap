@@ -1,0 +1,28 @@
+---
+
+galaxy_info:
+  role_name: bootstrap
+  author: Tibor Csóka
+  description: |
+    "Bootstrap a machine to be used with Ansible. Installs Python3"
+  company: ""
+
+  license: MIT
+
+  min_ansible_version: 2.7.1
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - bionic
+        - cosmic
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+
+  galaxy_tags:
+    - bootstrap
+    - python
+
+dependencies: []

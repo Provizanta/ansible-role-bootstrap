@@ -1,0 +1,12 @@
+---
+
+- name: check '{{ p.name }}' presence
+  raw: "{{ p.test.check }}"
+  register: packager_presence
+  changed_when: false
+  failed_when: false
+
+- name: add found '{{ p.name }}'
+  when: packager_presence.rc == 0
+  set_fact:
+    found_packagers: "{{ found_packagers + [ p.name ] }}"

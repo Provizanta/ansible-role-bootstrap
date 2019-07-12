@@ -1,0 +1,38 @@
+---
+
+- name: establish packager facts
+  include_tasks: packager_facts.yml
+  loop: "{{ packager | dict2items(key_name='name', value_name='test') }}"
+  loop_control:
+    loop_var: p
+  vars:
+    ansible_user: "{{ bootstrap_user | default(omit) }}"
+
+- name: establish environment facts
+  block:
+    - name: environment present
+      when:
+        - lookup('vars', 'environment') is defined
+        - lookup('vars', 'environment') | length > 0
+      set_fact:
+        _http_proxy: "{{ ('http_proxy=' ~ lookup('vars', 'environment')[0]['http_proxy'] ~ ' ') if ('http_proxy' in lookup('vars', 'environment')[0]) else '' }}"  # noqa 204
+        _https_proxy: "{{ ('https_proxy=' ~ lookup('vars', 'environment')[0]['https_proxy'] ~ ' ') if ('https_proxy' in lookup('vars', 'environment')[0]) else '' }}"  # noqa 204
+
+    - name: environment not present
+      when: (lookup('vars', 'environment') is not defined) or (lookup('vars', 'environment') | length == 0)
+      set_fact:
+        _http_proxy: ""
+        _https_proxy: ""
+
+- name: bootstrap python
+  become: true
+  raw: "{{ _http_proxy ~ _https_proxy ~ packager[item]['install'] }}"
+  register: install_result
+  changed_when: >-
+   (packager[item]['verify']['keyword'] in install_result.stdout and packager[item]['verify']['present']) or
+   (packager[item]['verify']['keyword'] not in install_result.stdout and not packager[item]['verify']['present'])
+  loop: "{{ found_packagers }}"
+
+- name: gather facts
+  become: false
+  setup: {}
