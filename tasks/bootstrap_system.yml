@@ -1,0 +1,22 @@
+---
+
+- name: apt | update cache
+  when: ansible_pkg_mgr == 'apt'
+  become: true
+  apt:
+    update_cache: true
+
+- name: apt | upgrade system
+  when: ansible_pkg_mgr == 'apt'
+  become: true
+  apt:
+    upgrade: safe
+    autoremove: true
+
+- name: Ubuntu | add universe repo
+  when: ansible_distribution == 'Ubuntu'
+  become: true
+  apt_repository:
+    repo: "deb http://archive.canonical.com/ubuntu {{ ansible_distribution_release }} universe"
+    filename: universe
+    state: present

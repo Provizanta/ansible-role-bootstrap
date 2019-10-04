@@ -1,3 +1,5 @@
 ---
 
 bootstrap_user: root
+
+bootstrap_system: true

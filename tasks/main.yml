@@ -13,3 +13,7 @@
 - name: gather facts
   become: false
   setup: {}
+
+- name: bootstrap system
+  when: bootstrap_system
+  include_tasks: bootstrap_system.yml
