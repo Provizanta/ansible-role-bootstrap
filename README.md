@@ -1,7 +1,7 @@
 Ansible role: bootstrap
 =========
 
-[![Build Status](https://travis-ci.com/Provizanta/ansible-role-bootstrap.svg?branch=master)](https://travis-ci.com/Provizanta/ansible-role-bootstrap)
+![Build & Deploy](https://github.com/Provizanta/ansible-role-bootstrap/workflows/molecule/badge.svg?branch=master)
 
 Bootstrap a clean machine to install Python3 for use with Ansible.
 

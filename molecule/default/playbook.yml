@@ -5,4 +5,4 @@
   gather_facts: false
   become: false
   roles:
-    - bootstrap
+    - ansible-role-bootstrap
