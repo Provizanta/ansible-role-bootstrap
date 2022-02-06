@@ -2,6 +2,7 @@
 
 galaxy_info:
   role_name: bootstrap
+  namespace: provizanta
   author: Tibor Csóka
   description: |
     "Bootstrap a machine to be used with Ansible. Installs Python3"
