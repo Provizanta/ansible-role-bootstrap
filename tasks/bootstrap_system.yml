@@ -5,6 +5,7 @@
   become: true
   apt:
     update_cache: true
+    cache_valid_time: 3600
 
 - name: apt | upgrade system
   when: ansible_pkg_mgr == 'apt'
